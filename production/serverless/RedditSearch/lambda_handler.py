@@ -3,6 +3,7 @@ import botocore
 from boto3.dynamodb.conditions import Key, Attr
 import praw
 import os
+import json
 
 def lambda_handler(event, context):
     """
@@ -52,7 +53,7 @@ def lambda_handler(event, context):
     ct_submissions = 0
 
     for submission in submissions:
-        if ct_submissions > 5:
+        if ct_submissions >= 5:
             break
 
         # Some search results are not internal Reddit sites. Skip those.
@@ -68,6 +69,13 @@ def lambda_handler(event, context):
                 if len(updated_searchkey) > len(existed_searchkey):
                     item['Item']['search_keywords'] = updated_searchkey
                     submission_table.put_item(Item=item['Item'])
+                    for comment_id in item['Item']['comments']:
+                        comment_table.update_item(
+                            Key={'comment_id':comment_id},
+                            UpdateExpression="SET #searchAtt = :searchValue",                   
+                            ExpressionAttributeValues={':searchValue': updated_searchkey},
+                            ExpressionAttributeNames={'#searchAtt': 'search_keywords'}
+                        )
                 continue
 
             # Initialize submission table item
@@ -90,7 +98,8 @@ def lambda_handler(event, context):
                     'comment_id' : comment.id,
                     'content' : comment.body,
                     'audio_status' : 'PROCESSING',
-                    'sentiment_status' : 'PROCESSING'
+                    'sentiment_status' : 'PROCESSING',
+                    'search_keywords' : search_keywords
                 }
                 submissionComments.append(comment.id)
 
@@ -103,7 +112,8 @@ def lambda_handler(event, context):
                     print(e, ' commentItem: ', commentItem)
 
                 # Trigger audio generation 
-                message = '{"type": "COMMENT", "comment_id", "%s"}' % comment.id
+                message = json.dumps({'type' : 'COMMENT', 'comment_id' : comment.id})
+                #message = "{'type': 'COMMENT', 'comment_id', '%s'}" % comment.id
                 sns.publish(
                     TopicArn=AUDIO_SNS_TOPIC,
                     Message=message
@@ -125,7 +135,8 @@ def lambda_handler(event, context):
                 print(e, ' submissionItem: ', submissionItem)
 
             # Trigger audio generation 
-            message = '{"type": "SUBMISSION", "submission_id", "%s"}' % submission.id
+            message = json.dumps({'type' : 'SUBMISSION', 'submission_id' : submission.id})
+            #"{'type': 'SUBMISSION', 'submission_id', '%s'}" % submission.id
             sns.publish(
                 TopicArn=AUDIO_SNS_TOPIC,
                 Message=message
@@ -144,7 +155,7 @@ if __name__ == "__main__":
     test = {
         "entities" : [
             {
-                "search" : ["Microsoft", "github"]
+                "search" : ["Microsoft"]
             }
         ]
     }
