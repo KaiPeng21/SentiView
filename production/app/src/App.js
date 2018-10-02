@@ -3,7 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 
 import * as Util from './Utils/SentiViewAPI';
-import {Button, Form, FormGroup, FormControl} from 'react-bootstrap';
+import {Button, Form, FormGroup, FormControl, ControlLabel, Tab, Tabs} from 'react-bootstrap';
 
 class App extends Component {
 
@@ -71,12 +71,14 @@ class App extends Component {
       <div className="App">
         <Form onSubmit={(e) => e.preventDefault()}>      
           <FormGroup>
-            <FormControl type="text" placeholder="Enter a Reddit Topic..." value={this.state.search} onChange={this.onProcessInputChange}/>
+            <ControlLabel>Enter a Reddit Topic:</ControlLabel>
+            <FormControl type="text" placeholder="Place your Reddit Topic here..." value={this.state.search} onChange={this.onProcessInputChange}/>
           </FormGroup>
         </Form>
         <Button className="btn" bsStyle="primary" bsSize="small" onClick={() => this.processPressed(this.state.search)}>PROCESS</Button>
         <Form onSubmit={(e) => e.preventDefault()}>
           <FormGroup controlId="formControlsSelect">
+            <ControlLabel>Select a processed topic:</ControlLabel>
             <FormControl componentClass="select" placeholder="select" value={this.state.selectedTopic} onChange={this.onSelectTopicChange}>
               <option value="">------</option>
               {this.state.loaded.map((x, i) => {
@@ -86,6 +88,17 @@ class App extends Component {
           </FormGroup>
         </Form>
         <Button className="btn" bsStyle="primary" bsSize="small" onClick={() => this.showPressed()}>SHOW</Button>
+        <Tabs defaultActiveKey={2} id="uncontrolled-tab-example">
+          <Tab eventKey={1} title="SUBMISSIONS">
+            submission contents
+          </Tab>
+          <Tab eventKey={2} title="STATS">
+            stats contents
+          </Tab>
+          <Tab eventKey={3} title="ABOUT">
+            About Page Content
+          </Tab>
+        </Tabs>
       </div>
     );
   }

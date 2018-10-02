@@ -26,15 +26,18 @@ def lambda_handler(event, context):
         FilterExpression=Attr('search_keywords').contains(search)
     )
 
+    comment_list = comment_items['Items']
+    comment_associative_arr = {comment_item['comment_id'] : comment_item for comment_item in comment_list}
+
     return {
         "submissions" : submission_items['Items'],
-        "comments" : comment_items['Items']
+        "comments" : comment_associative_arr
     }
 
 if __name__ == "__main__":
     
     test = {
-        "search" : "Microsoft Github"
+        "search" : "Microsoft"
     }
     response = lambda_handler(test, '')
     print(20*'-')
