@@ -3,6 +3,8 @@ import logo from './logo.svg';
 import './App.css';
 
 import * as Util from './Utils/SentiViewAPI';
+import StatBarChart from './Components/StatBarChart';
+import StatPieChart from './Components/StatPieChart';
 import {Button, Form, FormGroup, FormControl, ControlLabel, Tab, Tabs} from 'react-bootstrap';
 
 class App extends Component {
@@ -61,7 +63,7 @@ class App extends Component {
       Util.getSentiviewPromise(this.state.selectedTopic).then((response) => {
         console.log(this.state.selectedTopic)
         console.log(response['comments'])
-        console.log(response['submissions'])
+        console.log(response['stat'])
       }).catch(err => console.log(err))
     }
   }
@@ -93,7 +95,9 @@ class App extends Component {
             submission contents
           </Tab>
           <Tab eventKey={2} title="STATS">
-            stats contents
+            
+            <StatBarChart />
+            <StatPieChart />
           </Tab>
           <Tab eventKey={3} title="ABOUT">
             About Page Content
