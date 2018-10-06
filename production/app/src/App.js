@@ -3,8 +3,8 @@ import logo from './logo.svg';
 import './App.css';
 
 import * as Util from './Utils/SentiViewAPI';
-import StatBarChart from './Components/StatBarChart';
-import StatPieChart from './Components/StatPieChart';
+import TabStat from './Components/TabStat';
+import TabSubmission from './Components/TabSubmission';
 import {Button, Form, FormGroup, FormControl, ControlLabel, Tab, Tabs} from 'react-bootstrap';
 
 class App extends Component {
@@ -16,7 +16,7 @@ class App extends Component {
       search : '',
       selectedTopic : '',
       submissions : [],
-      comments : [],
+      statistics: {'POSITIVE' : 0, 'NEUTRAL' : 0, 'NEGATIVE' : 0, 'MIXED' : 0},
       loaded : []
     }
 
@@ -43,7 +43,7 @@ class App extends Component {
   }
 
   processPressed(search){
-    if (search != '' && !(search in this.state.loaded)){
+    if (search !== '' && !(search in this.state.loaded)){
       // trigger the SearchReddit lambda function
       Util.postSentiviewPromise(search).then((response) => {
         this.setState((prevState, props) => {
@@ -59,10 +59,27 @@ class App extends Component {
   }
 
   showPressed(){
-    if (this.state.selectedTopic != '' && this.state.selectedTopic != ' '){
+    if (this.state.selectedTopic !== '' && this.state.selectedTopic !== ' '){
       Util.getSentiviewPromise(this.state.selectedTopic).then((response) => {
+
+        if (typeof response['stat'] !== 'undefined'){
+          this.setState({
+            statistics : response['stat']
+          });
+        } else {
+          console.log('still loading...')
+        }
+
+        if (typeof response['submissions'] !== 'undefined'){
+          this.setState({
+            submissions : response['submissions']
+          });
+        } else {
+          console.log('still loading...')
+        }
+
         console.log(this.state.selectedTopic)
-        console.log(response['comments'])
+        console.log(response)
         console.log(response['stat'])
       }).catch(err => console.log(err))
     }
@@ -92,12 +109,10 @@ class App extends Component {
         <Button className="btn" bsStyle="primary" bsSize="small" onClick={() => this.showPressed()}>SHOW</Button>
         <Tabs defaultActiveKey={2} id="uncontrolled-tab-example">
           <Tab eventKey={1} title="SUBMISSIONS">
-            submission contents
+            <TabSubmission submissions={this.state.submissions}/>
           </Tab>
           <Tab eventKey={2} title="STATS">
-            
-            <StatBarChart />
-            <StatPieChart />
+            <TabStat topic={this.state.selectedTopic} statistics={this.state.statistics}/>
           </Tab>
           <Tab eventKey={3} title="ABOUT">
             About Page Content

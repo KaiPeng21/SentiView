@@ -1,27 +1,16 @@
 import React, { Component } from 'react';
 import {Doughnut} from 'react-chartjs-2';
+import * as Constants from '../Constants/Constants';
 
 class StatPieChart extends Component{
 
     render () {
         const data = {
-            labels: [
-                'Red',
-                'Green',
-                'Yellow'
-            ],
+            labels: ['Positive', 'Neutral', 'Negative', 'Mixed'],
             datasets: [{
-                data: [300, 50, 100],
-                backgroundColor: [
-                '#FF6384',
-                '#36A2EB',
-                '#FFCE56'
-                ],
-                hoverBackgroundColor: [
-                '#FF6384',
-                '#36A2EB',
-                '#FFCE56'
-                ]
+                data: this.props.data,
+                backgroundColor: Constants.SENTIMENT_COLOR_SOLID,
+                hoverBackgroundColor: Constants.SENTIMENT_COLOR_MED
             }]
         };
 
@@ -32,8 +21,7 @@ class StatPieChart extends Component{
         }
 
         return (
-            <div>
-                <h2>Doughnut Example</h2>
+            <div style={{width: '120rem'}}>
                 <Doughnut data={data} />
             </div>
         );
