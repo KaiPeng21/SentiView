@@ -10,3 +10,72 @@
   margin-top: 5px;
   margin-bottom: 15px;
 }
+
+.sentiment-legend .sentiment-legend-title {
+  text-align: left;
+  margin-bottom: 5px;
+  font-weight: bold;
+  font-size: 90%;
+  }
+.sentiment-legend .sentiment-legend-scale ul {
+  margin: 0;
+  margin-bottom: 5px;
+  padding: 0;
+  float: left;
+  list-style: none;
+  }
+.sentiment-legend .sentiment-legend-scale ul li {
+  font-size: 80%;
+  list-style: none;
+  margin-left: 0;
+  line-height: 18px;
+  margin-bottom: 2px;
+  }
+.sentiment-legend ul.sentiment-legend-labels li span {
+  display: block;
+  float: left;
+  height: 16px;
+  width: 30px;
+  margin-right: 5px;
+  margin-left: 0;
+  border: 1px solid #999;
+  }
+.sentiment-legend a {
+  color: #777;
+  }
+
+.comment-list-item {
+  list-style-type: none;
+  border: solid 1px;
+  border-left: solid 5px;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  padding: 0.5rem;
+  padding-left: 2rem;
+}
+
+.audio-btn{
+  border-radius: 0.5rem;
+  margin: 0.5rem;
+  margin-left: 0;
+  background: whitesmoke;
+  border-color: whitesmoke;
+}
+
+.gridbox-wide{
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 5px;
+}
+
+.gridbox-half{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 5px;
+}
+
+.gridbox-quarter{
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 5px;
+}

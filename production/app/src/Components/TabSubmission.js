@@ -15,8 +15,8 @@ class TabSubmission extends Component{
 
     render(){
 
-        //var submissions = this.props.submissions;
-        var submissions = this.state.test['submissions']
+        var submissions = this.props.submissions;
+        //var submissions = this.state.test['submissions']
 
         return (<div>
             <PanelGroup accordion id="accordion-example">
