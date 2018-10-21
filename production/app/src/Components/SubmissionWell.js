@@ -64,7 +64,7 @@ class SubmissionWell extends Component{
         var audiolink = this.props['audio'] !== 'undefined'? this.props.submission['audio'] : '';
         var comments = this.props.submission['comments'] !== 'undefined'? this.props.submission['comments'] : [];
 
-        return (<div>
+        return (<div style={{ marginTop: '0.5rem'}}>
             
   <Panel eventKey={this.props.eventKey}>
     <Panel.Heading>

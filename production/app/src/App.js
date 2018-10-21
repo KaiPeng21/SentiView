@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import {Button, Form, FormGroup, FormControl, ControlLabel, Tab, Tabs} from 'react-bootstrap';
 
 import * as Util from './Utils/SentiViewAPI';
 import TabStat from './Components/TabStat';
 import TabSubmission from './Components/TabSubmission';
-import {Button, Form, FormGroup, FormControl, ControlLabel, Tab, Tabs} from 'react-bootstrap';
+import TabAbout from './Components/TabAbout';
+
 
 class App extends Component {
 
@@ -17,17 +19,13 @@ class App extends Component {
       selectedTopic : '',
       submissions : [],
       statistics: {'POSITIVE' : 0, 'NEUTRAL' : 0, 'NEGATIVE' : 0, 'MIXED' : 0},
-      loaded : []
+      loaded : ['Microsoft', 'Amazon']
     }
 
     this.onProcessInputChange = this.onProcessInputChange.bind(this);
     this.onSelectTopicChange = this.onSelectTopicChange.bind(this);
     this.processPressed = this.processPressed.bind(this);
     this.showPressed = this.showPressed.bind(this);
-  }
-
-  componentDidMount(){
-
   }
 
   onProcessInputChange(event){
@@ -90,14 +88,14 @@ class App extends Component {
       <div className="App">
         <Form onSubmit={(e) => e.preventDefault()}>      
           <FormGroup>
-            <ControlLabel>Enter a Reddit Topic:</ControlLabel>
-            <FormControl type="text" placeholder="Place your Reddit Topic here..." value={this.state.search} onChange={this.onProcessInputChange}/>
+            <ControlLabel style={{color: '#f9f9f9'}}>Enter a Reddit Topic:</ControlLabel>
+            <FormControl type="text" placeholder="Type your Reddit Topic here..." value={this.state.search} onChange={this.onProcessInputChange}/>
           </FormGroup>
         </Form>
-        <Button className="btn" bsStyle="primary" bsSize="small" onClick={() => this.processPressed(this.state.search)}>PROCESS</Button>
+        <Button className="btn" bsStyle="default" bsSize="small" onClick={() => this.processPressed(this.state.search)}>PROCESS</Button>
         <Form onSubmit={(e) => e.preventDefault()}>
           <FormGroup controlId="formControlsSelect">
-            <ControlLabel>Select a processed topic:</ControlLabel>
+            <ControlLabel style={{color: '#f9f9f9'}}>Select a processed topic:</ControlLabel>
             <FormControl componentClass="select" placeholder="select" value={this.state.selectedTopic} onChange={this.onSelectTopicChange}>
               <option value="">------</option>
               {this.state.loaded.map((x, i) => {
@@ -106,8 +104,8 @@ class App extends Component {
             </FormControl>
           </FormGroup>
         </Form>
-        <Button className="btn" bsStyle="primary" bsSize="small" onClick={() => this.showPressed()}>SHOW</Button>
-        <Tabs defaultActiveKey={2} id="uncontrolled-tab-example">
+        <Button className="btn" bsStyle="default" bsSize="small" onClick={() => this.showPressed()}>SHOW</Button>
+        <Tabs defaultActiveKey={2} id="uncontrolled-tab-example" className="tabs" animation={false}>
           <Tab eventKey={1} title="SUBMISSIONS">
             <TabSubmission submissions={this.state.submissions}/>
           </Tab>
@@ -115,7 +113,7 @@ class App extends Component {
             <TabStat topic={this.state.selectedTopic} statistics={this.state.statistics}/>
           </Tab>
           <Tab eventKey={3} title="ABOUT">
-            About Page Content
+            <TabAbout/>
           </Tab>
         </Tabs>
       </div>

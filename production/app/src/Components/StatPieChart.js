@@ -21,7 +21,7 @@ class StatPieChart extends Component{
         }
 
         return (
-            <div style={{width: '120rem'}}>
+            <div>
                 <Doughnut data={data} />
             </div>
         );

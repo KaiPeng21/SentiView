@@ -28,7 +28,7 @@ class StatBarChart extends Component{
         }
 
         return (
-            <div style={{width: '50rem'}}>
+            <div>
               <HorizontalBar data={data} options={options}/>
             </div>
         );

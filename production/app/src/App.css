@@ -62,20 +62,24 @@
   border-color: whitesmoke;
 }
 
-.gridbox-wide{
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-gap: 5px;
+.tabs ul > li > a {
+  background-color: #131A22;
+  border-color: #131A22;
+  color: #f9f9f9;
+}
+.tabs ul > li > a:hover {
+  background-color: #4d7279;
+  border-color: #4d7279;
+  color: #f9f9f9;
+}
+.tabs ul > li.active > a,
+.tabs ul > li.active > a:hover,
+.tabs ul > li.active > a:focus {
+  background-color: #397f8d;
+  border-color: #4d7279;
+  color: #f9f9f9;
 }
 
-.gridbox-half{
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-gap: 5px;
-}
-
-.gridbox-quarter{
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-gap: 5px;
+ol.architecture-description  > li{
+  margin: 0.5rem;
 }
