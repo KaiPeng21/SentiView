@@ -1,4 +1,4 @@
-
+https://devpost.com/software/sentiview
 
 ## Overview
 Understand social sentiment helps companies to better understand the consumer’s feeling towards their product or their brand. This sentiment monitoring tool gives users insights about how the public feels in regards to their business and topics of interests. A company’s Public Relationship Department can utilize the tool to find the root of the problem and revise a plan to correct the negativity. Additionally, users can also analyze the social sentiment of the competitors, and develop a more innovative way to change how public reflects on their brand.
